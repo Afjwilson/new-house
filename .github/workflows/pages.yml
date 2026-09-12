@@ -1,4 +1,7 @@
-name: Deploy to GitHub Pages
+name: Publish to GitHub Pages
+
+# GitHub Pages serves this repo from the gh-pages branch, so every push to the
+# source branch is mirrored there. No build step: the app is plain HTML, CSS and JS.
 
 on:
   push:
@@ -6,34 +9,17 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
-  pages: write
-  id-token: write
+  contents: write
 
-# Let a running deploy finish; queue at most one more.
 concurrency:
-  group: pages
+  group: publish-pages
   cancel-in-progress: false
 
 jobs:
-  deploy:
+  publish:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
-      - name: Configure Pages
-        uses: actions/configure-pages@v5
-        with:
-          enablement: true
-
-      - name: Upload the site
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: .
-
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Mirror this commit to gh-pages
+        run: git push --force origin "HEAD:refs/heads/gh-pages"

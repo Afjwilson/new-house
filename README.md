@@ -72,6 +72,13 @@ To change the suggestions, edit `assets/checklists.js`. Each one is a short arra
 Rooms already in someone's saved plan keep the suggestions they were created with,
 so editing the library only affects rooms added afterwards (or a fresh start).
 
+## How it is published
+
+GitHub Pages serves the site from the `gh-pages` branch, and
+`.github/workflows/pages.yml` mirrors every push to the source branch there, so
+the live site follows this repo automatically. To serve it from `main` instead,
+change **Settings → Pages → Branch** and the workflow can be deleted.
+
 ## A note on the advice
 
 It is general guidance for a UK home, gathered into one place — not professional
